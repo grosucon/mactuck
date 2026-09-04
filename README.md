@@ -71,12 +71,11 @@ There is deliberately no status item. The dropdown is the whole interface.
 
 ## Limits
 
-- Main display only.
 - macOS 26 draws the menu bar transparent, so the blurred strip is faintly
   visible as a lighter band over the wallpaper.
 - Some apps only refresh menu item state when their real menu opens, so an
   item such as `Undo Typing` may show a stale title or enabled state.
-- Full-screen apps never show the strip.
+- A full-screen app shows no strip on that display; strips on other displays stay.
 - Apps that expose no menu bar through Accessibility, mostly Java and X11
   apps, get no strip.
 
@@ -105,6 +104,5 @@ The package has two targets. `MacTuckCore` is pure Swift with no AppKit: the
 menu item mapping from Accessibility attributes, the cover geometry, and the
 settings stores, all unit tested. `MacTuck` is the AppKit app: Accessibility
 reads, the non-activating cover panel, the lazily built `NSMenu`, and the
-SwiftUI settings window. The design notes in `docs/superpowers/specs` record
-what was tried, including a "lift" mode that was built, verified and then
-removed as more complicated than it was worth.
+SwiftUI settings window. A "lift" mode was built, verified and then removed as
+more complicated than it was worth.

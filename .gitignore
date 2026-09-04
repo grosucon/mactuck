@@ -7,3 +7,9 @@ DerivedData/
 .DS_Store
 .idea/
 .vscode/
+
+# Local working notes, never committed
+CLAUDE.md
+docs/superpowers/
+.claude/
+.superpowers/

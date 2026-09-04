@@ -2,8 +2,10 @@ import AppKit
 
 final class CoverPanel: NSPanel {
     let cover = CoverView(frame: NSRect(x: 0, y: 0, width: 400, height: 24))
+    let displayID: UInt32
 
-    init() {
+    init(displayID: UInt32) {
+        self.displayID = displayID
         super.init(
             contentRect: cover.frame,
             styleMask: [.borderless, .nonactivatingPanel],

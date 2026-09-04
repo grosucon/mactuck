@@ -18,11 +18,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func start() {
-        let fold = FoldController(reader: MenuBarReader(), settings: settings, exclusions: exclusions)
-        fold.dropdownActions = { [weak self, weak fold] in
+        let fold = FoldController(
+            reader: MenuBarReader(),
+            windows: MenuBarWindowReader(),
+            ownerReader: DisplayOwnerReader(),
+            settings: settings,
+            exclusions: exclusions
+        )
+        fold.dropdownActions = { [weak self, weak fold] owner in
             DropdownActions(
-                excludeTitle: "Exclude \(fold?.owner?.localizedName ?? "App")",
-                onExclude: { fold?.excludeOwner() },
+                excludeTitle: "Exclude \(owner.name)",
+                onExclude: {
+                    guard let bundleID = owner.bundleID else { return }
+                    fold?.exclude(bundleID: bundleID)
+                },
                 onSettings: { self?.showSettings() },
                 onQuit: { NSApp.terminate(nil) }
             )

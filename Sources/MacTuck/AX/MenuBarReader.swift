@@ -20,6 +20,7 @@ struct MenuBarSnapshot {
 @MainActor
 protocol MenuBarReading {
     func snapshot(pid: pid_t) -> MenuBarSnapshot?
+    func isFullScreen(pid: pid_t) -> Bool
 }
 
 @MainActor
@@ -34,4 +35,12 @@ final class MenuBarReader: MenuBarReading {
         }
         return MenuBarSnapshot(barFrame: barFrame, items: items)
     }
+
+    func isFullScreen(pid: pid_t) -> Bool {
+        let application = AXUIElementCreateApplication(pid)
+        guard let window: AXUIElement = application.attribute(kAXFocusedWindowAttribute) else { return false }
+        return window.attribute(fullScreenAttribute) ?? false
+    }
 }
+
+private let fullScreenAttribute = "AXFullScreen"
